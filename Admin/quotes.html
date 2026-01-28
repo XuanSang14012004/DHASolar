@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Báo giá</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="admin">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>⚡ Solar Admin</h2>
+            <ul>
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="customers.html">Khách hàng</a></li>
+                <li><a href="projects.html">Dự án</a></li>
+                <li class="active"><a href="quotes.html">Báo giá</a></li>
+                <li><a href="contacts.html">Liên hệ</a></li>
+                <li><a href="posts.html">Bài viết</a></li>
+            </ul>
+        </aside>
+
+        <!-- Content -->
+        <main class="content">
+            <div class="content-header">
+                <h1>Báo giá</h1>
+                <button class="btn-add" onclick="openModal()">+ Tạo báo giá</button>
+
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Khách hàng</th>
+                        <th>Số điện thoại</th>
+                        <th>Hệ thống</th>
+                        <th>Công suất</th>
+                        <th>Giá dự kiến</th>
+                        <th>Trạng thái</th>
+                        <th>Ngày tạo</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody id="quoteTable">
+                    <tr>
+                        <td>1</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>0987 654 321</td>
+                        <td>Điện mặt trời gia đình</td>
+                        <td>5 kWp</td>
+                        <td>120.000.000đ</td>
+                        <td><span class="status pending">Chờ duyệt</span></td>
+                        <td>20/01/2026</td>
+                        <td>
+                            <button class="btn view">Xem</button>
+                            <button class="btn edit">Sửa</button>
+                            <button class="btn delete">Xóa</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>2</td>
+                        <td>Trần Thị B</td>
+                        <td>0912 333 444</td>
+                        <td>Điện mặt trời doanh nghiệp</td>
+                        <td>50 kWp</td>
+                        <td>980.000.000đ</td>
+                        <td><span class="status approved">Đã gửi</span></td>
+                        <td>18/01/2026</td>
+                        <td>
+                            <button class="btn view">Xem</button>
+                            <button class="btn edit">Sửa</button>
+                            <button class="btn delete">Xóa</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </main>
+        <!-- Modal Form Báo Giá -->
+        <div class="modal" id="quoteModal">
+            <div class="modal-content">
+                <h2>Tạo báo giá</h2>
+
+                <form id="quoteForm">
+                    <div class="form-group">
+                        <label>Khách hàng</label>
+                        <input type="text" id="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Số điện thoại</label>
+                        <input type="text" id="phone" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Loại hệ thống</label>
+                        <select id="system">
+                            <option>Gia đình</option>
+                            <option>Doanh nghiệp</option>
+                            <option>Nhà xưởng</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Công suất</label>
+                        <input type="text" id="power" placeholder="VD: 5 kWp">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Giá dự kiến</label>
+                        <input type="text" id="price" placeholder="VD: 120.000.000đ">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn cancel" onclick="closeModal()">Hủy</button>
+                        <button type="submit" class="btn save">Lưu báo giá</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        let quotes = JSON.parse(localStorage.getItem("quotes")) || [];
+
+        function saveQuotes() {
+            localStorage.setItem("quotes", JSON.stringify(quotes));
+        }
+
+        function renderQuotes() {
+            const table = document.getElementById("quoteTable");
+            table.innerHTML = "";
+
+            quotes.forEach((q, index) => {
+                table.innerHTML += `
+        <tr>
+            <td>${index + 1}</td>
+            <td>${q.name}</td>
+            <td>${q.phone}</td>
+            <td>${q.system}</td>
+            <td>${q.power}</td>
+            <td>${q.price}</td>
+            <td>
+                <span class="status pending">${q.status}</span>
+            </td>
+            <td>${q.date}</td>
+            <td>
+                <td>
+    <button class="btn view" onclick="viewQuote(${q.id})">Xem</button>
+    <button class="btn edit" onclick="editQuote(${q.id})">Sửa</button>
+    <button class="btn delete" onclick="deleteQuote(${q.id})">Xóa</button>
+</td>
+
+                <button class="btn delete" onclick="deleteQuote(${q.id})">Xóa</button>
+            </td>
+        </tr>`;
+            });
+        }
+
+        function openModal() {
+            document.getElementById("quoteModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("quoteModal").style.display = "none";
+            document.getElementById("quoteForm").reset();
+        }
+
+        document.getElementById("quoteForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const quote = {
+                id: Date.now(),
+                name: name.value,
+                phone: phone.value,
+                system: system.value,
+                power: power.value,
+                price: price.value,
+                status: "Chờ duyệt",
+                date: new Date().toLocaleDateString("vi-VN")
+            };
+
+            quotes.push(quote);
+            saveQuotes();
+            renderQuotes();
+            closeModal();
+        });
+
+        function deleteQuote(id) {
+            if (!confirm("Xóa báo giá này?")) return;
+            quotes = quotes.filter(q => q.id !== id);
+            saveQuotes();
+            renderQuotes();
+        }
+
+        renderQuotes();
+    </script>
+
+</body>
+
+</html>

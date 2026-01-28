@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài viết</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="admin">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h2>⚡ Solar Admin</h2>
+        <ul>
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="customers.html">Khách hàng</a></li>
+            <li><a href="projects.html">Dự án</a></li>
+            <li><a href="quotes.html">Báo giá</a></li>
+            <li><a href="contacts.html">Liên hệ</a></li>
+            <li class="active"><a href="posts.html">Bài viết</a></li>
+        </ul>
+    </aside>
+
+    <!-- Content -->
+    <main class="content">
+        <div class="content-header">
+            <h1>Bài viết</h1>
+            <button class="btn-add" onclick="openPostModal()">+ Thêm bài viết</button>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tiêu đề</th>
+                    <th>Danh mục</th>
+                    <th>Trạng thái</th>
+                    <th>Ngày tạo</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody id="postTable"></tbody>
+        </table>
+    </main>
+</div>
+
+<!-- Modal Bài Viết -->
+<div class="modal" id="postModal">
+    <div class="modal-content">
+        <h2 id="modalTitle">Thêm bài viết</h2>
+
+        <form id="postForm">
+            <div class="form-group">
+                <label>Tiêu đề</label>
+                <input type="text" id="title" required>
+            </div>
+
+            <div class="form-group">
+                <label>Danh mục</label>
+                <select id="category">
+                    <option>Tin tức</option>
+                    <option>Kiến thức</option>
+                    <option>Dự án</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Nội dung</label>
+                <textarea id="content" rows="5" required></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn cancel" onclick="closePostModal()">Hủy</button>
+                <button type="submit" class="btn save">Lưu</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+let posts = JSON.parse(localStorage.getItem("posts")) || [];
+let editPostId = null;
+
+function savePosts() {
+    localStorage.setItem("posts", JSON.stringify(posts));
+}
+
+function renderPosts() {
+    const table = document.getElementById("postTable");
+    table.innerHTML = "";
+
+    posts.forEach((p, index) => {
+        table.innerHTML += `
+        <tr>
+            <td>${index + 1}</td>
+            <td>${p.title}</td>
+            <td>${p.category}</td>
+            <td>
+                <span class="status ${p.status === 'Hiển thị' ? 'approved' : 'pending'}">
+                    ${p.status}
+                </span>
+            </td>
+            <td>${p.date}</td>
+            <td>
+                <button class="btn view" onclick="viewPost(${p.id})">Xem</button>
+                <button class="btn edit" onclick="editPost(${p.id})">Sửa</button>
+                <button class="btn delete" onclick="deletePost(${p.id})">Xóa</button>
+            </td>
+        </tr>`;
+    });
+}
+
+function openPostModal() {
+    document.getElementById("postModal").style.display = "flex";
+}
+
+function closePostModal() {
+    document.getElementById("postModal").style.display = "none";
+    document.getElementById("postForm").reset();
+    editPostId = null;
+}
+
+function viewPost(id) {
+    const p = posts.find(item => item.id === id);
+    alert(
+`TIÊU ĐỀ: ${p.title}
+DANH MỤC: ${p.category}
+
+NỘI DUNG:
+${p.content}`
+    );
+}
+
+function editPost(id) {
+    const p = posts.find(item => item.id === id);
+    editPostId = id;
+
+    title.value = p.title;
+    category.value = p.category;
+    content.value = p.content;
+
+    document.getElementById("modalTitle").innerText = "Sửa bài viết";
+    openPostModal();
+}
+
+document.getElementById("postForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    if (editPostId) {
+        const p = posts.find(item => item.id === editPostId);
+        p.title = title.value;
+        p.category = category.value;
+        p.content = content.value;
+    } else {
+        posts.push({
+            id: Date.now(),
+            title: title.value,
+            category: category.value,
+            content: content.value,
+            status: "Hiển thị",
+            date: new Date().toLocaleDateString("vi-VN")
+        });
+    }
+
+    savePosts();
+    renderPosts();
+    closePostModal();
+});
+
+function deletePost(id) {
+    if (!confirm("Xóa bài viết này?")) return;
+    posts = posts.filter(p => p.id !== id);
+    savePosts();
+    renderPosts();
+}
+
+renderPosts();
+</script>
+
+</body>
+</html>
