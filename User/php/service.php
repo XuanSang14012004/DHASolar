@@ -1,0 +1,221 @@
+<?php
+include '../../config/database.php';
+include 'includes/header.php';
+?>
+<div class="title-about">
+        <h1>Dịch vụ của chúng tôi</h1>
+        <p>
+            Cung cấp giải pháp điện mặt trời toàn diện, từ tư vấn, thiết kế, lắp đặt đến bảo trì và giám sát hệ
+            thống.
+        </p>
+    </div>
+    <div class="container">
+
+        <div class="service-content">
+            <div class="service-content-ct">
+                <div class="service-icon">
+                    <i class="fa-solid fa-house"></i>
+                </div>
+                <h2>Hệ thống điện mặt trời gia đình</h2>
+                <p>Giải pháp điện mặt trời cho hộ gia đình, biệt thự, nhà phố.</p>
+
+                <ul class="service-prominent">
+                    <h3>Đặc điểm nổi bật:</h3>
+                    <li><i class="fa-solid fa-certificate"></i>Công suất từ 3kWp - 20kWp</li>
+                    <li><i class="fa-solid fa-certificate"></i>Giảm hóa đơn điện 50 - 70%</li>
+                    <li><i class="fa-solid fa-certificate"></i>Thời gian hoàn vốn 4 - 6 năm</li>
+                    <li><i class="fa-solid fa-certificate"></i>Bảo hành lâu dài</li>
+                    <li><i class="fa-solid fa-certificate"></i>Lắp đặt nhanh chóng</li>
+                    <h3>Lợi ích:</h3>
+                    <li><i class="fa-solid fa-certificate"></i>Tiết kiệm chi phí điện hàng tháng</li>
+                    <li><i class="fa-solid fa-certificate"></i>Tăng giá trị bất động sản</li>
+                    <li><i class="fa-solid fa-certificate"></i>Thân thiện môi trường</li>
+                    <li><i class="fa-solid fa-certificate"></i>Nguồn điện ổn định, tin cậy</li>
+                </ul>
+                <div class="service-mk">
+                    <p><i class="fa-solid fa-gem"></i>ROI - Lợi nhuận đầu tư:</p>
+                    <p>Hoàn vốn sau 4 - 6 năm, tiết kiệm hàng trăm triệu đồng trong 25 năm.</p>
+                </div>
+                <div class="tuvan">
+                    <a href="consulting.html" class="btn btn-book">Tư vấn miễn phí</a>
+                </div>
+
+            </div>
+            <div class="service-content-img">
+                <img src="../../test1.png" alt="">
+
+            </div>
+        </div>
+
+        <div class="service-content">
+            <div class="service-content-img">
+                <img src="../../test1.png" alt="">
+
+            </div>
+            <div class="service-content-ct">
+                <div class="service-icon">
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <h2>Hệ thống điện mặt trời thương mại & công nghiệp</h2>
+                <p>Giải pháp điện mặt trờitrời quy mô lớn cho doanh nghiệp, nhà máy, tòa nhà.</p>
+
+                <ul class="service-prominent">
+                    <h3>Đặc điểm nổi bật:</h3>
+                    <li><i class="fa-solid fa-certificate"></i>Công suất từ 30kWp - 1000kWp</li>
+                    <li><i class="fa-solid fa-certificate"></i>Giảm chi phí sản xuất đáng kể</li>
+                    <li><i class="fa-solid fa-certificate"></i>Tối ưu hoá mái nhà - bãi để xe</li>
+                    <li><i class="fa-solid fa-certificate"></i>Hệ thống giám sát online</li>
+                    <li><i class="fa-solid fa-certificate"></i>Lắp đặt nhanh chóng, bảo trì chuyên nghiệp</li>
+                    <h3>Lợi ích:</h3>
+                    <li><i class="fa-solid fa-certificate"></i>Giảm chi phí điện năng trực tiếp</li>
+                    <li><i class="fa-solid fa-certificate"></i>Cải thiện hiệu quả kinh doanh</li>
+                    <li><i class="fa-solid fa-certificate"></i>Nâng cao hình ảnh doanh nghiệp xanh</li>
+                    <li><i class="fa-solid fa-certificate"></i>Đáp ứng yêu cầu ESG</li>
+                </ul>
+                <div class="service-mk">
+                    <p><i class="fa-solid fa-gem"></i>ROI - Lợi nhuận đầu tư:</p>
+                    <p>Hoàn vốn sau 4 - 6 năm, tiết kiệm hàng tỉ đồng chi phí điện.</p>
+                </div>
+                <div class="tuvan">
+                    <a href="consulting.html" class="btn btn-book">Tư vấn miễn phí</a>
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+
+        <div class="service-content">
+            <div class="service-content-ct">
+                <div class="service-icon">
+                    <i class="fa-solid fa-battery-full"></i>
+                </div>
+                <h2>Hệ thống On-grid / Off-grid / Hybyrid</h2>
+                <p>Đa dạng giải pháp phù hợp với nhu cầu sử dụng điện.</p>
+
+                <ul class="service-prominent">
+                    <h3>Đặc điểm nổi bật:</h3>
+                    <li><i class="fa-solid fa-certificate"></i>On-grid:Hòa lưới, bán điện cho EVN</li>
+                    <li><i class="fa-solid fa-certificate"></i>Off-grid: Độc lập, có pin lưu trữ</li>
+                    <li><i class="fa-solid fa-certificate"></i>Hybrid: Kết hợp linh hoạt</li>
+                    <li><i class="fa-solid fa-certificate"></i>Tự động chuyển đổi nguồn điện</li>
+                    <li><i class="fa-solid fa-certificate"></i>Tối ưu chi phí đầu tư</li>
+                    <h3>Lợi ích:</h3>
+                    <li><i class="fa-solid fa-certificate"></i>Linh hoạt theo nhu cầu</li>
+                    <li><i class="fa-solid fa-certificate"></i>Đảm bảo cung cấp điện liên tục</li>
+                    <li><i class="fa-solid fa-certificate"></i>Tận dụng tối đa năng lượng mặt trời</li>
+                    <li><i class="fa-solid fa-certificate"></i>Dự phòng khi mất điện lưới</li>
+                </ul>
+                <div class="service-mk">
+                    <p><i class="fa-solid fa-gem"></i>ROI - Lợi nhuận đầu tư:</p>
+                    <p>Tùy theo loại hệ thống, hoàn vốn từ 4 - 7 năm.</p>
+                </div>
+                <div class="tuvan">
+                    <a href="consulting.html" class="btn btn-book">Tư vấn miễn phí</a>
+                </div>
+
+            </div>
+            <div class="service-content-img">
+                <img src="../../test1.png" alt="">
+
+            </div>
+        </div>
+
+        <div class="service-content">
+            <div class="service-content-img">
+                <img src="../../test1.png" alt="">
+
+            </div>
+            <div class="service-content-ct">
+                <div class="service-icon">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                </div>
+                <h2>Bảo trì và giám sát hệ thống</h2>
+                <p>Dịch vụ bảo trì định kỳ và giám sát hệ thống từ xa.</p>
+
+                <ul class="service-prominent">
+                    <h3>Đặc điểm nổi bật:</h3>
+                    <li><i class="fa-solid fa-certificate"></i>Vệ sinh tấm pin định kỳ</li>
+                    <li><i class="fa-solid fa-certificate"></i>Kiểm tra hệ thống định kỳ</li>
+                    <li><i class="fa-solid fa-certificate"></i>Giám sát online 24/7</li>
+                    <li><i class="fa-solid fa-certificate"></i>Sửa chữa nhanh chóng </li>
+                    <li><i class="fa-solid fa-certificate"></i>Báo cáo hiệu suất chi tiết </li>
+                    <h3>Lợi ích:</h3>
+                    <li><i class="fa-solid fa-certificate"></i>Duy trì hiệu suất tối ưu</li>
+                    <li><i class="fa-solid fa-certificate"></i>Kéo dài tuổi thọ cho hệ thống</li>
+                    <li><i class="fa-solid fa-certificate"></i>Phát hiện sớm sự cố</li>
+                    <li><i class="fa-solid fa-certificate"></i>Yên tâm khi sử dụng</li>
+                </ul>
+                <div class="service-mk">
+                    <p><i class="fa-solid fa-gem"></i>ROI - Lợi nhuận đầu tư:</p>
+                    <p>Tăng 15 - 20% hiệu suất, kéo dài tuổi thọ hệ thống.</p>
+                </div>
+                <div class="tuvan">
+                    <a href="consulting.html" class="btn btn-book">Tư vấn miễn phí</a>
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+
+
+    </div>
+    <div class="service-process">
+        <div class="title-about">
+            <h1>Quy trình triển khai</h1>
+            <p>
+                Quy trình chuyên nghiệp bài bản đảm bảo chất lượng và tiến độ
+            </p>
+        </div>
+        <div class="process">
+            <div class="process-item">
+                <span class="process-number">01</span>
+                <h3>Khảo sát & Tư vấn</h3>
+                <p>Khảo sát hiện trường, phân tích nhu cầu</p>
+            </div>
+
+            <div class="process-arrow">→</div>
+
+            <div class="process-item">
+                <span class="process-number">02</span>
+                <h3>Thiết kế & Báo giá</h3>
+                <p>Thiết kế hệ thống chi tiết</p>
+            </div>
+
+            <div class="process-arrow">→</div>
+
+            <div class="process-item">
+                <span class="process-number">03</span>
+                <h3>Thi công lắp đặt</h3>
+                <p>Thi công chuyên nghiệp</p>
+            </div>
+
+            <div class="process-arrow">→</div>
+
+            <div class="process-item">
+                <span class="process-number">04</span>
+                <h3>Nghiệm thu & Bàn giao</h3>
+                <p>Kiểm tra, nghiệm thu</p>
+            </div>
+
+            <div class="process-arrow">→</div>
+
+            <div class="process-item">
+                <span class="process-number">05</span>
+                <h3>Bảo hành & Bảo trì</h3>
+                <p>Hỗ trợ bảo hành, bảo trì</p>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+<?php include 'includes/footer.php'; ?>

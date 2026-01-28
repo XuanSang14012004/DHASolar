@@ -516,3 +516,158 @@ table td img {
     background: #27ae60;
     color: #fff;
 }
+
+/* ===== MODAL ===== */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background: #fff;
+    width: 820px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 10px;
+    padding: 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,.25);
+    animation: fadeIn .2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== HEADER ===== */
+.modal-content h2 {
+    margin-bottom: 18px;
+    font-size: 20px;
+    color: #111827;
+}
+
+.close {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+    color: #6b7280;
+}
+.close:hover {
+    color: #ef4444;
+}
+
+/* ===== FORM ===== */
+.modal-content form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: #374151;
+    font-weight: 500;
+}
+
+/* INPUT & TEXTAREA */
+.form-group input,
+.form-group textarea {
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    font-size: 14px;
+    outline: none;
+    transition: .2s;
+    background: #f9fafb;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #2563eb;
+    background: #fff;
+}
+
+/* CHECKBOX */
+.checkbox {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+/* ===== BUTTONS ===== */
+.form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn {
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+}
+
+.btn.save {
+    background: #2563eb;
+    color: #fff;
+}
+.btn.save:hover {
+    background: #1e40af;
+}
+
+.btn.cancel {
+    background: #9ca3af;
+    color: #fff;
+}
+.btn.cancel:hover {
+    background: #6b7280;
+}
+
+/* ===== ADD BUTTON ===== */
+.btn.add {
+    background: #22c55e;
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+.btn.add:hover {
+    background: #16a34a;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+    }
+    .modal-content form {
+        grid-template-columns: 1fr;
+    }
+}
