@@ -17,7 +17,8 @@ if (isset($_GET['delete'])) {
     exit();
 }
 // Thêm bài viết
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title']) && !isset($_POST['edit_id']))
+ {
 
     function slugify($str)
     {
@@ -37,10 +38,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title'])) {
     $is_featured = isset($_POST['is_featured']) ? 1 : 0;
 
     $imageName = null;
+
     if (!empty($_FILES['image']['name'])) {
-        $imageName = time() . '_' . $_FILES['image']['name'];
-        move_uploaded_file($_FILES['image']['tmp_name'], "../../uploads/$imageName");
+
+        $targetDir = "../../images/posts/";
+
+        // Tạo tên ảnh tránh trùng
+        $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+        $imageName = time() . "." . $ext;
+
+        move_uploaded_file($_FILES['image']['tmp_name'], $targetDir . $imageName);
     }
+
 
     $sql = "INSERT INTO posts 
         (title, slug, description, content, image, category, author, tags, is_featured)
@@ -66,6 +75,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title'])) {
     exit();
 }
 
+// ===== Sửa bài viết =====
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_id'])) {
+
+    $id = (int)$_POST['edit_id'];
+    $title = $_POST['title'];
+    $description = $_POST['description'];
+    $content = $_POST['content'];
+    $category = $_POST['category'];
+    $author = $_POST['author'];
+
+    // Lấy ảnh cũ
+    $oldImage = $conn->query("SELECT image FROM posts WHERE id=$id")
+                     ->fetch_assoc()['image'];
+
+    $imageName = $oldImage;
+
+    // Nếu upload ảnh mới
+    if (!empty($_FILES['image']['name'])) {
+
+        $targetDir = "../../images/posts/";
+
+        $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+        $imageName = time() . "." . $ext;
+
+        move_uploaded_file($_FILES['image']['tmp_name'], $targetDir . $imageName);
+
+        // Xóa ảnh cũ
+        if ($oldImage && file_exists($targetDir . $oldImage)) {
+            unlink($targetDir . $oldImage);
+        }
+    }
+
+    $sql = "UPDATE posts 
+            SET title=?, description=?, content=?, category=?, author=?, image=?
+            WHERE id=?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssssssi",
+        $title,
+        $description,
+        $content,
+        $category,
+        $author,
+        $imageName,
+        $id
+    );
+
+    $stmt->execute();
+
+    header("Location: posts.php");
+    exit();
+}
 
 
 // Lấy danh sách liên hệ
@@ -94,12 +155,11 @@ if (!$result) {
         <aside class="sidebar">
             <h2>⚡ Solar Admin</h2>
             <ul>
-                <li><a href="index.php">Dashboard</a></li>
-                <li><a href="customers.php">Khách hàng</a></li>
+                <li class="active"><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="projects.php">Dự án</a></li>
-                <li><a href="quotes.php">Báo giá</a></li>
-                <li class="active"><a href="contacts.php">Liên hệ</a></li>
+                <li><a href="contacts.php">Liên hệ</a></li>
                 <li><a href="posts.php">Bài viết</a></li>
+                <li><a href="logout.php">Đăng xuất</a></li>
             </ul>
         </aside>
 
@@ -151,7 +211,10 @@ if (!$result) {
 
                                 <td>
                                     <?php if ($post['image']): ?>
-                                        <img src="../../uploads/<?= $post['image'] ?>" class="thumb">
+                                        <img src="../../images/posts/<?= $post['image'] ?>" class="thumb" style="width: 80px;
+                                                                                                                height: 60px;
+                                                                                                           object-fit: cover;
+                                                                                                          border-radius: 6px;">
                                     <?php else: ?>
                                         —
                                     <?php endif; ?>
@@ -256,7 +319,10 @@ if (!$result) {
                 📅 <span id="viewDate"></span>
             </p>
 
-            <img id="viewImage" class="view-image">
+            <img id="viewImage" class="view-image" style="width: 80px;
+                                                                                                                height: 60px;
+                                                                                                           object-fit: cover;
+                                                                                                          border-radius: 6px;">
 
             <p id="viewDescription" class="view-desc"></p>
 
@@ -290,10 +356,10 @@ if (!$result) {
                 <div class="form-group">
                     <label>Danh mục</label>
                     <select name="category" id="edit_category">
-                        <option>Hộ gia đình</option>
-                        <option>Nhà xưởng</option>
-                        <option>Doanh nghiệp</option>
-                        <option>Nông nghiệp</option>
+                        <option value="Kiến thức">Kiến thức</option>
+                        <option value="Chính sách">Chính sách</option>
+                        <option value="Doanh nghiệp">Doanh nghiệp</option>
+                        <option value="Hướng dẫn">Hướng dẫn</option>
                     </select>
                 </div>
 
@@ -301,6 +367,11 @@ if (!$result) {
                     <label>Tác giả</label>
                     <input type="text" name="author" id="edit_author">
                 </div>
+                <div class="form-group">
+                    <label>Ảnh</label>
+                    <input type="file" name="image">
+                </div>
+
 
                 <div class="form-actions">
                     <button type="button" class="btn cancel" onclick="closeEdit()">Hủy</button>
@@ -338,7 +409,7 @@ if (!$result) {
                     document.getElementById('viewContent').innerHTML = p.content;
 
                     if (p.image) {
-                        document.getElementById('viewImage').src = '../../uploads/' + p.image;
+                        document.getElementById('viewImage').src = '../../images/posts/' + p.image;
                         document.getElementById('viewImage').style.display = 'block';
                     } else {
                         document.getElementById('viewImage').style.display = 'none';

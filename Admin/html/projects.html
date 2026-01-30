@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Dự án</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="admin">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h2>⚡ Solar Admin</h2>
+        <ul>
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="customers.html">Khách hàng</a></li>
+            <li class="active"><a href="projects.html">Dự án</a></li>
+            <li><a href="quotes.html">Báo giá</a></li>
+            <li><a href="contacts.html">Liên hệ</a></li>
+            <li><a href="posts.html">Bài viết</a></li>
+        </ul>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="content">
+        <div class="header">
+            <h1>Quản lý dự án</h1>
+            <button onclick="openModal()">+ Thêm dự án</button>
+        </div>
+
+        <div class="filter-bar">
+            <input type="text" id="searchInput" placeholder="Tìm theo tên dự án, địa điểm...">
+            <select id="statusFilter">
+                <option value="">Tất cả trạng thái</option>
+                <option value="Hoàn thành">Hoàn thành</option>
+                <option value="Đang thi công">Đang thi công</option>
+            </select>
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>Tên dự án</th>
+                <th>Loại dự án</th>
+                <th>Địa điểm</th>
+                <th>Công suất</th>
+                <th>Mô tả</th>
+                <th>Ảnh</th>
+                <th>Tấm pin</th>
+                <th>Inverter</th>
+                <th>Tiết kiệm</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
+            </tr>
+            </thead>
+
+            <tbody id="projectList">
+            <tr>
+                <td>1</td>
+                <td>Điện mặt trời hộ gia đình</td>
+                <td>Hộ gia đình</td>
+                <td>Hà Nội</td>
+                <td>8.5 kWp</td>
+                <td>Hệ thống điện mặt trời hòa lưới cho biệt thự 3 tầng</td>
+                <td>
+                    <img src="img/project1.jpg" alt="project" style="width:80px">
+                </td>
+                <td>220 tấm x 425W</td>
+                <td>Growatt 8kW</td>
+                <td>8–10 triệu/năm</td>
+                <td><span class="status success">Hoàn thành</span></td>
+                <td>
+                    <button class="edit" onclick="editProject(this)">Sửa</button>
+                    <button class="delete" onclick="deleteRow(this)">Xóa</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <h3 id="modalTitle">Thêm dự án</h3>
+
+        <input type="text" id="projectName" placeholder="Tên dự án">
+        <input type="text" id="projectType" placeholder="Loại dự án">
+        <input type="text" id="location" placeholder="Địa điểm">
+        <input type="text" id="capacity" placeholder="Công suất (kWp)">
+        <input type="text" id="description" placeholder="Mô tả">
+        <input type="text" id="images" placeholder="Link ảnh (img/project.jpg)">
+        <input type="text" id="batery" placeholder="Tấm pin">
+        <input type="text" id="innerver" placeholder="Inverter">
+        <input type="text" id="savingInput" placeholder="Tiết kiệm">
+
+        <select id="status">
+            <option>Đang thi công</option>
+            <option>Hoàn thành</option>
+        </select>
+
+        <div class="modal-actions">
+            <button onclick="saveProject()">Lưu</button>
+            <button class="cancel" onclick="closeModal()">Hủy</button>
+        </div>
+    </div>
+</div>
+
+<script src="projects.js"></script>
+</body>
+</html>

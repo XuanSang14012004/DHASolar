@@ -9,63 +9,8 @@ if (isset($_GET['delete'])) {
     header("Location: projects.php");
     exit();
 }
-/* CẬP NHẬT DỰ ÁN */
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_id'])) {
-
-    $id = (int)$_POST['edit_id'];
-    $title = $_POST['title'];
-    $category = $_POST['category'];
-    $tag = $_POST['tag'];
-    $power = $_POST['power'];
-    $location = $_POST['location'];
-    $description = $_POST['description'];
-    $panel = $_POST['panel'];
-    $inverter = $_POST['inverter'];
-    $saving = $_POST['saving'];
-
-    $image_sql = "";
-    if (!empty($_FILES['image']['name'])) {
-        $image = time() . '_' . $_FILES['image']['name'];
-        move_uploaded_file($_FILES['image']['tmp_name'], "../../uploads/$image");
-        $image_sql = ", image='$image'";
-    }
-
-    $sql = "UPDATE projects SET
-            title=?,
-            category=?,
-            tag=?,
-            power=?,
-            location=?,
-            description=?,
-            panel=?,
-            inverter=?,
-            saving=?
-            $image_sql
-            WHERE id=?";
-
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param(
-        $stmt,
-        "sssssssssi",
-        $title,
-        $category,
-        $tag,
-        $power,
-        $location,
-        $description,
-        $panel,
-        $inverter,
-        $saving,
-        $id
-    );
-    mysqli_stmt_execute($stmt);
-
-    header("Location: projects.php");
-    exit();
-}
-
-/* THÊM DỰ ÁN */
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title'])) {
+/* XỬ LÝ FORM */
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $title = $_POST['title'];
     $category = $_POST['category'];
@@ -77,36 +22,115 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title'])) {
     $inverter = $_POST['inverter'];
     $saving = $_POST['saving'];
 
-    $image = null;
-    if (!empty($_FILES['image']['name'])) {
-        $image = time() . '_' . $_FILES['image']['name'];
-        move_uploaded_file($_FILES['image']['tmp_name'], "../../uploads/$image");
+    /* =======================
+       SỬA DỰ ÁN
+    ======================= */
+    if (!empty($_POST['edit_id'])) {
+
+        $id = (int)$_POST['edit_id'];
+
+        // Lấy ảnh cũ
+        $stmtImg = mysqli_prepare($conn, "SELECT image FROM projects WHERE id=?");
+        mysqli_stmt_bind_param($stmtImg, "i", $id);
+        mysqli_stmt_execute($stmtImg);
+        $resultImg = mysqli_stmt_get_result($stmtImg);
+        $image_sql = mysqli_fetch_assoc($resultImg)['image'];
+
+        $image = $image_sql;
+
+        // Nếu upload ảnh mới
+        if (!empty($_FILES['image']['name'])) {
+
+            $targetDir = "../../images/projects/";
+            $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+            $image = time() . "." . $ext;
+
+            move_uploaded_file($_FILES['image']['tmp_name'], $targetDir . $image);
+
+            // Xóa ảnh cũ
+            if ($image_sql && file_exists($targetDir . $image_sql)) {
+                unlink($targetDir . $image_sql);
+            }
+        }
+
+        $sql = "UPDATE projects SET
+                title=?,
+                category=?,
+                tag=?,
+                power=?,
+                location=?,
+                description=?,
+                panel=?,
+                inverter=?,
+                saving=?,
+                image=?
+                WHERE id=?";
+
+        $stmt = mysqli_prepare($conn, $sql);
+
+        mysqli_stmt_bind_param(
+            $stmt,
+            "ssssssssssi",
+            $title,
+            $category,
+            $tag,
+            $power,
+            $location,
+            $description,
+            $panel,
+            $inverter,
+            $saving,
+            $image,
+            $id
+        );
+
+        mysqli_stmt_execute($stmt);
     }
 
-    $sql = "INSERT INTO projects 
+    /* =======================
+       THÊM DỰ ÁN
+    ======================= */
+    else {
+
+        $image = null;
+
+        if (!empty($_FILES['image']['name'])) {
+
+            $targetDir = "../../images/projects/";
+            $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+            $image = time() . "." . $ext;
+
+            move_uploaded_file($_FILES['image']['tmp_name'], $targetDir . $image);
+        }
+
+        $sql = "INSERT INTO projects 
         (image, title, category, tag, power, location, description, panel, inverter, saving)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param(
-        $stmt,
-        "ssssssssss",
-        $image,
-        $title,
-        $category,
-        $tag,
-        $power,
-        $location,
-        $description,
-        $panel,
-        $inverter,
-        $saving
-    );
-    mysqli_stmt_execute($stmt);
+        $stmt = mysqli_prepare($conn, $sql);
+
+        mysqli_stmt_bind_param(
+            $stmt,
+            "ssssssssss",
+            $image,
+            $title,
+            $category,
+            $tag,
+            $power,
+            $location,
+            $description,
+            $panel,
+            $inverter,
+            $saving
+        );
+
+        mysqli_stmt_execute($stmt);
+    }
 
     header("Location: projects.php");
     exit();
 }
+
 
 /* LẤY DANH SÁCH */
 $result = mysqli_query($conn, "SELECT * FROM projects ORDER BY id DESC");
@@ -126,12 +150,11 @@ $result = mysqli_query($conn, "SELECT * FROM projects ORDER BY id DESC");
         <aside class="sidebar">
             <h2>⚡ Solar Admin</h2>
             <ul>
-                <li><a href="index.php">Dashboard</a></li>
-                <li><a href="customers.php">Khách hàng</a></li>
+                <li class="active"><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="projects.php">Dự án</a></li>
-                <li><a href="quotes.php">Báo giá</a></li>
-                <li class="active"><a href="contacts.php">Liên hệ</a></li>
+                <li><a href="contacts.php">Liên hệ</a></li>
                 <li><a href="posts.php">Bài viết</a></li>
+                <li><a href="logout.php">Đăng xuất</a></li>
             </ul>
         </aside>
 
@@ -166,7 +189,10 @@ $result = mysqli_query($conn, "SELECT * FROM projects ORDER BY id DESC");
                                 <td><?= $i++ ?></td>
                                 <td>
                                     <?php if ($p['image']): ?>
-                                        <img src="../../uploads/<?= $p['image'] ?>" class="thumb">
+                                        <img src="../../images/projects/<?= $p['image'] ?>" class="thumb" style="width: 80px;
+                                                                                                                height: 60px;
+                                                                                                           object-fit: cover;
+                                                                                                          border-radius: 6px;">
                                     <?php endif; ?>
                                 </td>
                                 <td><strong><?= htmlspecialchars($p['title']) ?></strong></td>

@@ -1,165 +1,4 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
-body {
-    background: #f4f6f8;
-}
-
-.admin {
-    display: flex;
-    min-height: 100vh;
-}
-
-/* SIDEBAR */
-.sidebar {
-    width: 230px;
-    background: #0a3d62;
-    color: #fff;
-    padding: 20px;
-}
-
-.sidebar h2 {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.sidebar ul {
-    list-style: none;
-}
-
-.sidebar ul li {
-    margin-bottom: 10px;
-}
-
-.sidebar ul li a {
-    color: #fff;
-    text-decoration: none;
-    padding: 10px;
-    display: block;
-    border-radius: 5px;
-}
-
-.sidebar ul li.active a,
-.sidebar ul li a:hover {
-    background: #1e90ff;
-}
-
-/* CONTENT */
-.content {
-    flex: 1;
-    padding: 30px;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.header button {
-    background: #1e90ff;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/* TABLE */
-table {
-    width: 100%;
-    background: white;
-    border-collapse: collapse;
-}
-
-table th, table td {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-}
-
-table th {
-    background: #f1f1f1;
-}
-
-/* STATUS */
-.status {
-    padding: 5px 10px;
-    border-radius: 12px;
-    font-size: 13px;
-}
-
-.status.success {
-    background: #2ecc71;
-    color: white;
-}
-
-.status.pending {
-    background: #f39c12;
-    color: white;
-}
-
-/* BUTTON */
-.delete {
-    background: #e74c3c;
-    color: white;
-    border: none;
-    padding: 6px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-.edit {
-    background: #27ae60;
-    color: white;
-    border: none;
-    padding: 6px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: 5px;
-}
-
-/* MODAL */
-.modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.4);
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background: white;
-    padding: 20px;
-    width: 300px;
-    border-radius: 8px;
-}
-
-.modal-content input,
-.modal-content select {
-    width: 100%;
-    margin: 8px 0;
-    padding: 8px;
-}
-
-.modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
-
-.modal-actions button {
-    padding: 8px 12px;
-    border: none;
-    cursor: pointer;
-}
-
-.cancel {
-    background: #ccc;
-}
+/* ===== RESET ===== */
 * {
     margin: 0;
     padding: 0;
@@ -171,13 +10,13 @@ body {
     background: #f4f6f8;
 }
 
-/* LAYOUT */
+/* ===== LAYOUT ===== */
 .admin {
     display: flex;
     min-height: 100vh;
 }
 
-/* SIDEBAR */
+/* ===== SIDEBAR ===== */
 .sidebar {
     width: 230px;
     background: #0a3d62;
@@ -201,7 +40,7 @@ body {
 .sidebar ul li a {
     display: block;
     padding: 10px;
-    color: white;
+    color: #fff;
     text-decoration: none;
     border-radius: 6px;
 }
@@ -211,185 +50,13 @@ body {
     background: #1e90ff;
 }
 
-/* CONTENT */
+/* ===== CONTENT ===== */
 .content {
     flex: 1;
     padding: 25px;
     overflow-x: auto;
 }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.header button {
-    background: #1e90ff;
-    color: white;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-/* TABLE */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    font-size: 14px;
-}
-
-table th,
-table td {
-    padding: 12px 10px;
-    border-bottom: 1px solid #ddd;
-    vertical-align: middle;
-}
-
-table th {
-    background: #f1f3f6;
-    white-space: nowrap;
-    text-align: left;
-}
-
-/* MÔ TẢ DÀI */
-table td:nth-child(5) {
-    max-width: 260px;
-    line-height: 1.4;
-}
-
-/* ẢNH */
-table td img {
-    width: 70px;
-    height: 45px;
-    object-fit: cover;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-}
-
-/* STATUS */
-.status {
-    padding: 5px 10px;
-    border-radius: 12px;
-    font-size: 12px;
-    white-space: nowrap;
-}
-
-.status.success {
-    background: #2ecc71;
-    color: white;
-}
-
-.status.pending {
-    background: #f39c12;
-    color: white;
-}
-
-/* BUTTON */
-.edit {
-    background: #27ae60;
-    color: white;
-    border: none;
-    padding: 6px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.delete {
-    background: #e74c3c;
-    color: white;
-    border: none;
-    padding: 6px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-left: 5px;
-}
-
-/* MODAL */
-.modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.4);
-    justify-content: center;
-    align-items: center;
-    z-index: 99;
-}
-
-.modal-content {
-    background: white;
-    width: 380px;
-    padding: 20px;
-    border-radius: 8px;
-}
-
-.modal-content h3 {
-    margin-bottom: 10px;
-}
-
-.modal-content input,
-.modal-content textarea,
-.modal-content select {
-    width: 100%;
-    padding: 8px;
-    margin: 6px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.modal-actions {
-    margin-top: 10px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
-
-.modal-actions button {
-    padding: 8px 14px;
-    border: none;
-    cursor: pointer;
-}
-
-.cancel {
-    background: #ccc;
-}
-
-/* RESPONSIVE */
-@media (max-width: 1200px) {
-    table {
-        font-size: 13px;
-    }
-}
-
-@media (max-width: 768px) {
-    .sidebar {
-        width: 180px;
-    }
-
-    table td:nth-child(5) {
-        max-width: 180px;
-    }
-}
-.filter-bar {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-.filter-bar input,
-.filter-bar select {
-    padding: 8px 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 14px;
-}
-
-.filter-bar input {
-    flex: 1;
-}
 .content-header {
     display: flex;
     justify-content: space-between;
@@ -397,33 +64,72 @@ table td img {
     margin-bottom: 20px;
 }
 
-.btn-add {
-    background: #27ae60;
-    color: #fff;
-    border: none;
-    padding: 10px 16px;
+/* ===== BUTTON ===== */
+.btn {
+    padding: 8px 14px;
     border-radius: 6px;
+    border: none;
     cursor: pointer;
+    font-size: 14px;
 }
 
+.btn.add {
+    background: #22c55e;
+    color: white;
+}
+
+.btn.edit {
+    background: #f1c40f;
+    color: black;
+}
+
+.btn.delete {
+    background: #e74c3c;
+    color: white;
+}
+
+.btn.save {
+    background: #2563eb;
+    color: white;
+}
+
+.btn.cancel {
+    background: #9ca3af;
+    color: white;
+}
+
+/* ===== TABLE ===== */
 .table {
     width: 100%;
     border-collapse: collapse;
-    background: #fff;
+    background: white;
     border-radius: 10px;
     overflow: hidden;
+    font-size: 14px;
 }
 
-.table th, .table td {
-    padding: 12px 14px;
+.table th,
+.table td {
+    padding: 12px;
     border-bottom: 1px solid #eee;
-    text-align: left;
+    vertical-align: middle;
 }
 
 .table th {
     background: #f4f6f8;
+    text-align: left;
 }
 
+/* Ảnh thumbnail */
+.table img {
+    width: 70px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+/* ===== STATUS ===== */
 .status {
     padding: 4px 10px;
     border-radius: 20px;
@@ -440,91 +146,14 @@ table td img {
     color: #155724;
 }
 
-.btn {
-    padding: 6px 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 13px;
-}
-
-.btn.view {
-    background: #3498db;
-    color: #fff;
-}
-
-.btn.edit {
-    background: #f1c40f;
-    color: #000;
-}
-
-.btn.delete {
-    background: #e74c3c;
-    color: #fff;
-}
-.modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-}
-
-.modal-content {
-    background: #fff;
-    width: 420px;
-    padding: 25px;
-    border-radius: 10px;
-}
-
-.modal-content h2 {
-    margin-bottom: 15px;
-}
-
-.form-group {
-    margin-bottom: 12px;
-}
-
-.form-group label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 4px;
-}
-
-.form-group input,
-.form-group select {
-    width: 100%;
-    padding: 8px 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-}
-
-.form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.btn.cancel {
-    background: #bdc3c7;
-}
-
-.btn.save {
-    background: #27ae60;
-    color: #fff;
-}
-
 /* ===== MODAL ===== */
 .modal {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.55);
+    background: rgba(0,0,0,0.55);
     display: none;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     z-index: 9999;
 }
 
@@ -541,14 +170,7 @@ table td img {
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ===== HEADER ===== */
-.modal-content h2 {
-    margin-bottom: 18px;
-    font-size: 20px;
-    color: #111827;
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .close {
@@ -557,6 +179,7 @@ table td img {
     cursor: pointer;
     color: #6b7280;
 }
+
 .close:hover {
     color: #ef4444;
 }
@@ -580,20 +203,19 @@ table td img {
 .form-group label {
     font-size: 13px;
     margin-bottom: 6px;
-    color: #374151;
     font-weight: 500;
+    color: #374151;
 }
 
-/* INPUT & TEXTAREA */
 .form-group input,
-.form-group textarea {
-    padding: 10px 12px;
+.form-group textarea,
+.form-group select {
+    padding: 10px;
     border-radius: 6px;
     border: 1px solid #d1d5db;
+    background: #f9fafb;
     font-size: 14px;
     outline: none;
-    transition: .2s;
-    background: #f9fafb;
 }
 
 .form-group textarea {
@@ -602,21 +224,13 @@ table td img {
 }
 
 .form-group input:focus,
-.form-group textarea:focus {
+.form-group textarea:focus,
+.form-group select:focus {
     border-color: #2563eb;
-    background: #fff;
+    background: white;
 }
 
-/* CHECKBOX */
-.checkbox {
-    grid-column: 1 / -1;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-}
-
-/* ===== BUTTONS ===== */
+/* ===== FORM ACTION ===== */
 .form-actions {
     grid-column: 1 / -1;
     display: flex;
@@ -625,49 +239,42 @@ table td img {
     margin-top: 10px;
 }
 
-.btn {
-    padding: 10px 16px;
+/* ===== FILTER BAR ===== */
+.filter-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.filter-bar input,
+.filter-bar select {
+    padding: 8px 10px;
     border-radius: 6px;
+    border: 1px solid #ccc;
     font-size: 14px;
-    cursor: pointer;
-    border: none;
 }
 
-.btn.save {
-    background: #2563eb;
-    color: #fff;
-}
-.btn.save:hover {
-    background: #1e40af;
-}
-
-.btn.cancel {
-    background: #9ca3af;
-    color: #fff;
-}
-.btn.cancel:hover {
-    background: #6b7280;
-}
-
-/* ===== ADD BUTTON ===== */
-.btn.add {
-    background: #22c55e;
-    color: #fff;
-    padding: 10px 14px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-}
-.btn.add:hover {
-    background: #16a34a;
+.filter-bar input {
+    flex: 1;
 }
 
 /* ===== RESPONSIVE ===== */
+@media (max-width: 992px) {
+    .sidebar {
+        width: 180px;
+    }
+}
+
 @media (max-width: 768px) {
     .modal-content {
         width: 95%;
     }
+
     .modal-content form {
         grid-template-columns: 1fr;
+    }
+
+    .table {
+        font-size: 13px;
     }
 }

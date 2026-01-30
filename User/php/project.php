@@ -34,7 +34,7 @@ include 'includes/header.php';
         while ($row = mysqli_fetch_assoc($result)) {
         ?>
             <div class="project-item <?= $row['category'] ?>">
-                <img src="../../<?= $row['image'] ?>" alt="<?= $row['title'] ?>">
+                <img src="../../images/projects/<?= $row['image'] ?>" alt="<?= $row['title'] ?>">
 
                 <div class="project-info">
                     <div class="tags">

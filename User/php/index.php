@@ -24,7 +24,7 @@ include 'includes/header.php';
         </div>
 
         <div class="welcome-image">
-            <img src="../../test1.png" alt="">
+            <img src="../../images/logo/test1.png" alt="">
         </div>
     </div>
 
@@ -91,7 +91,7 @@ include 'includes/header.php';
             while ($row = mysqli_fetch_assoc($result)) {
             ?>
                 <div class="project-most-item">
-                    <img src="../../<?= $row['image'] ?>">
+                    <img src="../../images/projects/<?= $row['image'] ?>">
                     <h3><?= $row['title'] ?></h3>
                     <ul class="project-most-info">
                         <li><?= $row['power'] ?></li>

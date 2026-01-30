@@ -29,7 +29,7 @@ $posts = mysqli_query(
     <?php if ($featuredPost): ?>
         <div class="featured-post">
             <div class="featured-post-img">
-                <img src="../../<?= $featuredPost['image'] ?>" alt="">
+                <img src="../../images/posts/<?= $featuredPost['image'] ?>" alt="">
             </div>
 
             <div class="featured-post-content">
@@ -74,7 +74,7 @@ $posts = mysqli_query(
         <section class="blog-content" id="postList">
             <?php while ($row = mysqli_fetch_assoc($posts)): ?>
                 <div class="blog-card image-card" data-category="<?= $row['category'] ?>">
-                    <img src="../../<?= $row['image'] ?>" alt="">
+                    <img src="../../images/posts/<?= $row['image'] ?>" alt="">
 
                     <div class="image-card-content">
                         <span class="blog-tag knowledge"><?= $row['category'] ?></span>

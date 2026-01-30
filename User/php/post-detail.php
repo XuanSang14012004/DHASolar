@@ -74,7 +74,7 @@ if (!$related_posts) {
 
             <!-- ẢNH ĐẠI DIỆN -->
             <div class="post-featured-image">
-                <img src="../../<?= htmlspecialchars($post['image']) ?>" 
+                <img src="../../images/posts/<?= htmlspecialchars($post['image']) ?>" 
                      alt="<?= htmlspecialchars($post['title']) ?>">
             </div>
 
@@ -131,7 +131,7 @@ if (!$related_posts) {
                     <?php while ($related = mysqli_fetch_assoc($related_posts)): ?>
                     <div class="related-card">
                         <a href="post-detail.php?id=<?= $related['id'] ?>">
-                            <img src="../../<?= htmlspecialchars($related['image']) ?>" 
+                            <img src="../../images/posts/<?= htmlspecialchars($related['image']) ?>" 
                                  alt="<?= htmlspecialchars($related['title']) ?>">
                             <div class="related-card-content">
                                 <span class="related-category"><?= htmlspecialchars($related['category']) ?></span>
@@ -187,7 +187,7 @@ if (!$related_posts) {
                     <?php while ($popular = mysqli_fetch_assoc($popular_posts)): ?>
                     <li>
                         <a href="post-detail.php?id=<?= $popular['id'] ?>">
-                            <img src="../../<?= htmlspecialchars($popular['image']) ?>" 
+                            <img src="../../images/posts/<?= htmlspecialchars($popular['image']) ?>" 
                                  alt="<?= htmlspecialchars($popular['title']) ?>">
                             <div>
                                 <h4><?= htmlspecialchars($popular['title']) ?></h4>

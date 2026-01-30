@@ -37,7 +37,7 @@ include 'includes/header.php';
                     <p>Hoàn vốn sau 4 - 6 năm, tiết kiệm hàng trăm triệu đồng trong 25 năm.</p>
                 </div>
                 <div class="tuvan">
-                    <a href="consulting.html" class="btn btn-book">Tư vấn miễn phí</a>
+                    <a href="contact.php" class="btn btn-book">Tư vấn miễn phí</a>
                 </div>
 
             </div>
@@ -77,7 +77,7 @@ include 'includes/header.php';
                     <p>Hoàn vốn sau 4 - 6 năm, tiết kiệm hàng tỉ đồng chi phí điện.</p>
                 </div>
                 <div class="tuvan">
-                    <a href="consulting.html" class="btn btn-book">Tư vấn miễn phí</a>
+                    <a href="contact.php" class="btn btn-book">Tư vấn miễn phí</a>
                 </div>
 
             </div>
@@ -113,7 +113,7 @@ include 'includes/header.php';
                     <p>Tùy theo loại hệ thống, hoàn vốn từ 4 - 7 năm.</p>
                 </div>
                 <div class="tuvan">
-                    <a href="consulting.html" class="btn btn-book">Tư vấn miễn phí</a>
+                    <a href="contact.php" class="btn btn-book">Tư vấn miễn phí</a>
                 </div>
 
             </div>
@@ -153,7 +153,7 @@ include 'includes/header.php';
                     <p>Tăng 15 - 20% hiệu suất, kéo dài tuổi thọ hệ thống.</p>
                 </div>
                 <div class="tuvan">
-                    <a href="consulting.html" class="btn btn-book">Tư vấn miễn phí</a>
+                    <a href="contact.php" class="btn btn-book">Tư vấn miễn phí</a>
                 </div>
 
             </div>

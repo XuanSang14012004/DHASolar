@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Khách hàng</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="admin">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h2>⚡ Solar Admin</h2>
+        <ul>
+            <li><a href="index.html">Dashboard</a></li>
+            <li class="active"><a href="customers.html">Khách hàng</a></li>
+            <li><a href="projects.html">Dự án</a></li>
+            <li><a href="quotes.html">Báo giá</a></li>
+            <li><a href="contacts.html">Liên hệ</a></li>
+            <li><a href="posts.html">Bài viết</a></li>
+        </ul>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="content">
+        <div class="header">
+            <h1>Danh sách khách hàng</h1>
+            <button onclick="openModal()">+ Thêm khách hàng</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Tên</th>
+                    <th>SĐT</th>
+                    <th>Địa chỉ</th>
+                    <th>Trạng thái</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody id="customerList">
+                <tr>
+                    <td>1</td>
+                    <td>Nguyễn Văn A</td>
+                    <td>098xxxxxxx</td>
+                    <td>Hà Nội</td>
+                    <td><span class="status success">Đã tư vấn</span></td>
+                    <td>
+                        <button class="edit" onclick="editCustomer(this)">Sửa</button>
+                        <button class="delete" onclick="deleteRow(this)">Xóa</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <h3 id="modalTitle">Thêm khách hàng</h3>
+
+        <input type="text" id="name" placeholder="Tên khách hàng">
+        <input type="text" id="phone" placeholder="Số điện thoại">
+        <input type="text" id="address" placeholder="Địa chỉ">
+
+        <select id="status">
+            <option>Chưa tư vấn</option>
+            <option>Đã tư vấn</option>
+        </select>
+
+        <div class="modal-actions">
+            <button onclick="saveCustomer()">Lưu</button>
+            <button class="cancel" onclick="closeModal()">Hủy</button>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="script.js"></script>
+</body>
+</html>

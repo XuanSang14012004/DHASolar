@@ -52,12 +52,11 @@ if (!$result) {
         <aside class="sidebar">
             <h2>⚡ Solar Admin</h2>
             <ul>
-                <li><a href="index.php">Dashboard</a></li>
-                <li><a href="customers.php">Khách hàng</a></li>
+                <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="projects.php">Dự án</a></li>
-                <li><a href="quotes.php">Báo giá</a></li>
                 <li class="active"><a href="contacts.php">Liên hệ</a></li>
                 <li><a href="posts.php">Bài viết</a></li>
+                <li><a href="logout.php">Đăng Xuất</a></li>
             </ul>
         </aside>
 
