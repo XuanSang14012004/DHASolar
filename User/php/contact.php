@@ -40,7 +40,7 @@ include 'includes/header.php';
         <div class="contact-head-item">
             <span class="contact-icon"><i class="fa-solid fa-phone"></i></span>
             <h3>Điện thoại</h3>
-            <p>0123456789</p>
+            <p>0353551584</p>
         </div>
 
 
@@ -48,7 +48,7 @@ include 'includes/header.php';
         <div class="contact-head-item">
             <span class="contact-icon"><i class="fa-solid fa-envelope"></i></span>
             <h3>Email</h3>
-            <p>ABC@gmail.com</p>
+            <p>Dhasolar63888@gmail.com</p>
         </div>
 
 
@@ -56,7 +56,7 @@ include 'includes/header.php';
         <div class="contact-head-item">
             <span class="contact-icon"><i class="fa-solid fa-location-dot"></i></span>
             <h3>Địa chỉ</h3>
-            <p>ABC,ABC,ABC,HÀ NỘI</p>
+            <p>Vinhomes ocean park 2, chà là 15.SP23-08,Nghĩa Trụ,  Hưng Yên , Việt Nam</p>
         </div>
 
 
@@ -128,18 +128,18 @@ include 'includes/header.php';
             <div class="office-box">
                 <i class="fa-solid fa-location-dot"></i>
                 <p>
-                    Số 123, Đường ABC<br>
-                    Quận Cầu Giấy, Hà Nội
+                    Vinhomes ocean park 2, chà là 15.SP23-08<br>
+                    Nghĩa Trụ,  Hưng Yên , Việt Nam
                 </p>
-                <a href="#" class="map-link">Xem trên Google Maps →</a>
+                <a href="https://maps.app.goo.gl/eo2JSH66LhgWfM2ZA" class="map-link">Xem trên Google Maps →</a>
             </div>
 
             <div class="office-social">
                 <h3>Kết nối với chúng tôi</h3>
                 <div class="social-icons">
-                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#"><i class="fa-solid fa-comment"></i></a>
-                    <a href="mailto:example@gmail.com"><i class="fa-brands fa-google"></i></a>
+                    <a href="https://www.facebook.com/hungho.le.549"target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://zalo.me/0353551584 "target="_blank"><i class="fa-solid fa-comment"></i></a>
+                    <a href="mailto:Dhasolar63888@gmail.com"target="_blank"><i class="fa-brands fa-google"></i></a>
                 </div>
             </div>
         </div>

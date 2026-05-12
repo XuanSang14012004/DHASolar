@@ -2,126 +2,203 @@
 session_start();
 include '../../config/database.php';
 
-/* XÓA DỰ ÁN */
+/* XÓA SẢN PHẨM */
 if (isset($_GET['delete'])) {
+
     $id = (int)$_GET['delete'];
-    mysqli_query($conn, "DELETE FROM projects WHERE id = $id");
+
+    // Lấy ảnh cũ
+    $imgQuery = mysqli_query(
+        $conn,
+        "SELECT image FROM solar_panels WHERE id = $id"
+    );
+
+    $img = mysqli_fetch_assoc($imgQuery);
+
+    if ($img && file_exists("../../images/projects/" . $img['image'])) {
+
+        unlink("../../images/projects/" . $img['image']);
+    }
+
+    mysqli_query($conn, "DELETE FROM solar_panels WHERE id = $id");
+
     header("Location: projects.php");
     exit();
 }
+
 /* XỬ LÝ FORM */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $title = $_POST['title'];
-    $category = $_POST['category'];
-    $tag = $_POST['tag'];
+    $name = $_POST['name'];
+    $brand = $_POST['brand'];
     $power = $_POST['power'];
-    $location = $_POST['location'];
+    $technology = $_POST['technology'];
+    $efficiency = $_POST['efficiency'];
+    $warranty = $_POST['warranty'];
+    $size = $_POST['size'];
+    $price = $_POST['price'];
+    $category = $_POST['category'];
     $description = $_POST['description'];
-    $panel = $_POST['panel'];
-    $inverter = $_POST['inverter'];
-    $saving = $_POST['saving'];
 
-    /* =======================
-       SỬA DỰ ÁN
-    ======================= */
+    /* ==========================
+       SỬA SẢN PHẨM
+    ========================== */
     if (!empty($_POST['edit_id'])) {
 
         $id = (int)$_POST['edit_id'];
 
-        // Lấy ảnh cũ
-        $stmtImg = mysqli_prepare($conn, "SELECT image FROM projects WHERE id=?");
-        mysqli_stmt_bind_param($stmtImg, "i", $id);
-        mysqli_stmt_execute($stmtImg);
-        $resultImg = mysqli_stmt_get_result($stmtImg);
-        $image_sql = mysqli_fetch_assoc($resultImg)['image'];
+        // Ảnh cũ
+        $oldImgQuery = mysqli_query(
+            $conn,
+            "SELECT image FROM solar_panels WHERE id = $id"
+        );
 
-        $image = $image_sql;
+        $oldImage = mysqli_fetch_assoc($oldImgQuery)['image'];
 
-        // Nếu upload ảnh mới
+        $image = $oldImage;
+
+        // Upload ảnh mới
         if (!empty($_FILES['image']['name'])) {
 
             $targetDir = "../../images/projects/";
-            $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+
+            $ext = pathinfo(
+                $_FILES['image']['name'],
+                PATHINFO_EXTENSION
+            );
+            $allowed = ['jpg', 'jpeg', 'png', 'webp'];
+
+            if (!in_array(strtolower($ext), $allowed)) {
+
+                echo "<script>
+        alert('Chỉ cho phép ảnh jpg, jpeg, png, webp');
+        window.history.back();
+    </script>";
+
+                exit();
+            }
+
             $image = time() . "." . $ext;
 
-            move_uploaded_file($_FILES['image']['tmp_name'], $targetDir . $image);
+            move_uploaded_file(
+                $_FILES['image']['tmp_name'],
+                $targetDir . $image
+            );
 
             // Xóa ảnh cũ
-            if ($image_sql && file_exists($targetDir . $image_sql)) {
-                unlink($targetDir . $image_sql);
+            if ($oldImage && file_exists($targetDir . $oldImage)) {
+
+                unlink($targetDir . $oldImage);
             }
         }
 
-        $sql = "UPDATE projects SET
-                title=?,
-                category=?,
-                tag=?,
-                power=?,
-                location=?,
-                description=?,
-                panel=?,
-                inverter=?,
-                saving=?,
-                image=?
-                WHERE id=?";
+        $sql = "
+            UPDATE solar_panels SET
+            name=?,
+            image=?,
+            brand=?,
+            power=?,
+            technology=?,
+            efficiency=?,
+            warranty=?,
+            size=?,
+            price=?,
+            category=?,
+            description=?
+            WHERE id=?
+        ";
 
         $stmt = mysqli_prepare($conn, $sql);
 
         mysqli_stmt_bind_param(
             $stmt,
-            "ssssssssssi",
-            $title,
-            $category,
-            $tag,
-            $power,
-            $location,
-            $description,
-            $panel,
-            $inverter,
-            $saving,
+            "sssssssssssi",
+            $name,
             $image,
+            $brand,
+            $power,
+            $technology,
+            $efficiency,
+            $warranty,
+            $size,
+            $price,
+            $category,
+            $description,
             $id
         );
 
         mysqli_stmt_execute($stmt);
     }
 
-    /* =======================
-       THÊM DỰ ÁN
-    ======================= */
-    else {
+    /* ==========================
+       THÊM SẢN PHẨM
+    ========================== */ else {
 
         $image = null;
 
         if (!empty($_FILES['image']['name'])) {
 
             $targetDir = "../../images/projects/";
-            $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+
+            $ext = pathinfo(
+                $_FILES['image']['name'],
+                PATHINFO_EXTENSION
+            );
+            $allowed = ['jpg', 'jpeg', 'png', 'webp'];
+
+            if (!in_array(strtolower($ext), $allowed)) {
+
+                echo "<script>
+        alert('Chỉ cho phép ảnh jpg, jpeg, png, webp');
+        window.history.back();
+    </script>";
+
+                exit();
+            }
+
             $image = time() . "." . $ext;
 
-            move_uploaded_file($_FILES['image']['tmp_name'], $targetDir . $image);
+            move_uploaded_file(
+                $_FILES['image']['tmp_name'],
+                $targetDir . $image
+            );
         }
 
-        $sql = "INSERT INTO projects 
-        (image, title, category, tag, power, location, description, panel, inverter, saving)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "
+            INSERT INTO solar_panels
+            (
+                name,
+                image,
+                brand,
+                power,
+                technology,
+                efficiency,
+                warranty,
+                size,
+                price,
+                category,
+                description
+            )
+            VALUES
+            (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ";
 
         $stmt = mysqli_prepare($conn, $sql);
 
         mysqli_stmt_bind_param(
             $stmt,
-            "ssssssssss",
+            "sssssssssss",
+            $name,
             $image,
-            $title,
-            $category,
-            $tag,
+            $brand,
             $power,
-            $location,
-            $description,
-            $panel,
-            $inverter,
-            $saving
+            $technology,
+            $efficiency,
+            $warranty,
+            $size,
+            $price,
+            $category,
+            $description
         );
 
         mysqli_stmt_execute($stmt);
@@ -131,199 +208,316 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 
-
-/* LẤY DANH SÁCH */
-$result = mysqli_query($conn, "SELECT * FROM projects ORDER BY id DESC");
+/* DANH SÁCH SẢN PHẨM */
+$result = mysqli_query(
+    $conn,
+    "SELECT * FROM solar_panels ORDER BY id DESC"
+);
 ?>
+
 <!DOCTYPE html>
 <html lang="vi">
 
 <head>
     <meta charset="UTF-8">
-    <title>Dự án - Solar Admin</title>
+    <title>Quản lý sản phẩm</title>
+
     <link rel="stylesheet" href="admin.css">
 </head>
 
 <body>
 
     <div class="admin">
+
+        <!-- SIDEBAR -->
         <aside class="sidebar">
+
             <h2>⚡ Solar Admin</h2>
+
             <ul>
                 <li class="active"><a href="dashboard.php">Dashboard</a></li>
-                <li><a href="projects.php">Dự án</a></li>
+                <li><a href="projects.php">Sản phẩm</a></li>
                 <li><a href="contacts.php">Liên hệ</a></li>
                 <li><a href="posts.php">Bài viết</a></li>
+                <li><a href="order.php">Đơn hàng</a></li>
                 <li><a href="logout.php">Đăng xuất</a></li>
             </ul>
+
         </aside>
 
+        <!-- CONTENT -->
         <main class="content">
+
             <div class="content-header">
-                <h1>Quản lý Dự án</h1>
-                <button class="btn add" onclick="openModal()">➕ Thêm dự án</button>
+
+                <h1>Quản lý sản phẩm</h1>
+
+                <button class="btn add"
+                    onclick="openModal()">
+
+                    Thêm sản phẩm
+
+                </button>
+
             </div>
 
+            <!-- TABLE -->
             <div class="table-wrapper">
+
                 <table class="table">
+
                     <thead>
+
                         <tr>
+
                             <th>STT</th>
+
                             <th>Ảnh</th>
-                            <th>Tiêu đề</th>
-                            <th>Danh mục</th>
-                            <th>Loại dự án</th>
+
+                            <th>Tên sản phẩm</th>
+
+                            <th>Hãng</th>
+
                             <th>Công suất</th>
-                            <th>Địa điểm</th>
-                            <th>Mô tả</th>
-                            <th>Số lượng</th>
-                            <th>Thông số</th>
-                            <th>Tiết kiệm</th>
+
+                            <th>Công nghệ</th>
+
+                            <th>Hiệu suất</th>
+
+                            <th>Giá</th>
+
+                            <th>Danh mục</th>
+
                             <th>Hành động</th>
+
                         </tr>
+
                     </thead>
+
                     <tbody>
-                        <?php $i = 1;
-                        while ($p = mysqli_fetch_assoc($result)): ?>
+
+                        <?php
+                        $i = 1;
+
+                        while ($p = mysqli_fetch_assoc($result)):
+                        ?>
+
                             <tr>
+
                                 <td><?= $i++ ?></td>
-                                <td>
-                                    <?php if ($p['image']): ?>
-                                        <img src="../../images/projects/<?= $p['image'] ?>" class="thumb" style="width: 80px;
-                                                                                                                height: 60px;
-                                                                                                           object-fit: cover;
-                                                                                                          border-radius: 6px;">
-                                    <?php endif; ?>
-                                </td>
-                                <td><strong><?= htmlspecialchars($p['title']) ?></strong></td>
-                                <td>
-                                    <span class="badge">
-                                        <?= $p['category']  ?>
-                                    </span>
-                                </td>
-                                <td><?= $p['tag'] ?></td>
-                                <td><?= $p['power'] ?></td>
-                                <td><?= $p['location'] ?></td>
-                                <td><?= $p['description'] ?></td>
-                                <td><?= $p['panel'] ?></td>
-                                <td><?= $p['inverter'] ?></td>
-                                <td><?= $p['saving'] ?></td>
 
                                 <td>
-                                    <button class="btn edit"
-                                        onclick='openEditModal(<?= json_encode($p) ?>)'>
-                                        ✏️ Sửa
-                                    </button>
-                                    <a href="?delete=<?= $p['id'] ?>"
-                                        class="btn delete"
-                                        onclick="return confirm('Xóa dự án này?')">
-                                        🗑 Xóa
-                                    </a>
+
+                                    <?php if ($p['image']): ?>
+
+                                        <img
+                                            src="../../images/projects/<?= $p['image'] ?>"
+                                            style="
+                                        width:80px;
+                                        height:60px;
+                                        object-fit:cover;
+                                        border-radius:6px;
+                                    ">
+
+                                    <?php endif; ?>
+
                                 </td>
+
+                                <td>
+                                    <strong>
+                                        <?= htmlspecialchars($p['name']) ?>
+                                    </strong>
+                                </td>
+
+                                <td><?= $p['brand'] ?></td>
+
+                                <td><?= $p['power'] ?></td>
+
+                                <td><?= $p['technology'] ?></td>
+
+                                <td><?= $p['efficiency'] ?></td>
+
+                                <td style="color:red;font-weight:bold;">
+                                    <?= number_format($p['price']) ?> VNĐ
+                                </td>
+
+                                <td>
+
+                                    <span class="badge">
+
+                                        <?= $p['category'] ?>
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <button
+                                        class="btn edit"
+                                        onclick='openEditModal(<?= json_encode($p) ?>)'>
+
+                                        Sửa
+
+                                    </button>
+
+                                    <a
+                                        href="?delete=<?= $p['id'] ?>"
+                                        class="btn delete"
+                                        onclick="return confirm('Xóa sản phẩm này?')">
+
+                                        🗑 Xóa
+
+                                    </a>
+
+                                </td>
+
                             </tr>
+
                         <?php endwhile; ?>
+
                     </tbody>
+
                 </table>
+
             </div>
+
         </main>
+
     </div>
-    <!-- thêm dự án -->
-    <div class="modal" id="projectModal">
+
+    <!-- MODAL THÊM -->
+    <div class="modal" id="productModal">
+
         <div class="modal-content large">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2>➕ Thêm dự án</h2>
+
+            <span class="close"
+                onclick="closeModal()">
+
+                &times;
+
+            </span>
+
+            <h2> Thêm sản phẩm</h2>
 
             <form method="POST" enctype="multipart/form-data">
 
                 <div class="form-group">
-                    <label>Tiêu đề</label>
-                    <input type="text" name="title" required>
+                    <label>Tên sản phẩm</label>
+                    <input type="text" name="name" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Danh mục</label>
-                    <select name="category">
-                        <option value="home">Home</option>
-                        <option value="business">Business</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Tag</label>
-                    <select name="tag">
-                        <option value="Hộ gia đình">Hộ gia đình</option>
-                        <option value="Thương mại">Thương mại</option>
-                    </select>
+                    <label>Hãng</label>
+                    <input type="text" name="brand">
                 </div>
 
                 <div class="form-group">
                     <label>Công suất</label>
-                    <input type="text" name="power" placeholder="VD: 5kWp">
+                    <input type="text" name="power">
                 </div>
 
                 <div class="form-group">
-                    <label>Địa điểm</label>
-                    <input type="text" name="location">
+                    <label>Công nghệ</label>
+                    <input type="text" name="technology">
                 </div>
 
                 <div class="form-group">
-                    <label>Mô tả</label>
-                    <textarea name="description" rows="3"></textarea>
+                    <label>Hiệu suất</label>
+                    <input type="text" name="efficiency">
                 </div>
 
                 <div class="form-group">
-                    <label>Pin (Panel)</label>
-                    <input type="text" name="panel">
+                    <label>Bảo hành</label>
+                    <input type="text" name="warranty">
                 </div>
 
                 <div class="form-group">
-                    <label>Inverter</label>
-                    <input type="text" name="inverter">
+                    <label>Kích thước</label>
+                    <input type="text" name="size">
                 </div>
 
                 <div class="form-group">
-                    <label>Tiết kiệm</label>
-                    <input type="text" name="saving">
-                </div>
-
-                <div class="form-group">
-                    <label>Ảnh dự án</label>
-                    <input type="file" name="image">
-                </div>
-
-                <div class="form-actions">
-                    <button type="button" class="btn cancel" onclick="closeModal()">Hủy</button>
-                    <button class="btn save">💾 Lưu dự án</button>
-                </div>
-
-            </form>
-        </div>
-    </div>
-    <!-- Sửa dự án -->
-    <div class="modal" id="editModal">
-        <div class="modal-content large">
-            <span class="close" onclick="closeEditModal()">&times;</span>
-            <h2>✏️ Sửa dự án</h2>
-
-            <form method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="edit_id" id="edit_id">
-
-                <div class="form-group">
-                    <label>Tiêu đề</label>
-                    <input type="text" name="title" id="edit_title" required>
+                    <label>Giá</label>
+                    <input type="number" name="price">
                 </div>
 
                 <div class="form-group">
                     <label>Danh mục</label>
-                    <select name="category" id="edit_category">
-                        <option value="home">Hộ gia đình</option>
-                        <option value="business">Doanh nghiệp</option>
+
+                    <select name="category">
+
+                        <option value="mono">Mono</option>
+
+                        <option value="poly">Poly</option>
+
+                        <option value="premium">Premium</option>
+
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label>Tag</label>
-                    <input type="text" name="tag" id="edit_tag">
+                    <label>Mô tả</label>
+                    <textarea name="description"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Ảnh sản phẩm</label>
+                    <input type="file" name="image">
+                </div>
+
+                <div class="form-actions">
+
+                    <button type="button"
+                        class="btn cancel"
+                        onclick="closeModal()">
+
+                        Hủy
+
+                    </button>
+
+                    <button class="btn save">
+
+                        Lưu sản phẩm
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- MODAL SỬA -->
+    <div class="modal" id="editModal">
+
+        <div class="modal-content large">
+
+            <span class="close"
+                onclick="closeEditModal()">
+
+                &times;
+
+            </span>
+
+            <h2> Sửa sản phẩm</h2>
+
+            <form method="POST" enctype="multipart/form-data">
+
+                <input type="hidden"
+                    name="edit_id"
+                    id="edit_id">
+
+                <div class="form-group">
+                    <label>Tên sản phẩm</label>
+                    <input type="text" name="name" id="edit_name">
+                </div>
+
+                <div class="form-group">
+                    <label>Hãng</label>
+                    <input type="text" name="brand" id="edit_brand">
                 </div>
 
                 <div class="form-group">
@@ -332,74 +526,114 @@ $result = mysqli_query($conn, "SELECT * FROM projects ORDER BY id DESC");
                 </div>
 
                 <div class="form-group">
-                    <label>Địa điểm</label>
-                    <input type="text" name="location" id="edit_location">
+                    <label>Công nghệ</label>
+                    <input type="text" name="technology" id="edit_technology">
+                </div>
+
+                <div class="form-group">
+                    <label>Hiệu suất</label>
+                    <input type="text" name="efficiency" id="edit_efficiency">
+                </div>
+
+                <div class="form-group">
+                    <label>Bảo hành</label>
+                    <input type="text" name="warranty" id="edit_warranty">
+                </div>
+
+                <div class="form-group">
+                    <label>Kích thước</label>
+                    <input type="text" name="size" id="edit_size">
+                </div>
+
+                <div class="form-group">
+                    <label>Giá</label>
+                    <input type="number" name="price" id="edit_price">
+                </div>
+
+                <div class="form-group">
+                    <label>Danh mục</label>
+
+                    <select name="category" id="edit_category">
+
+                        <option value="mono">Mono</option>
+
+                        <option value="poly">Poly</option>
+
+                        <option value="premium">Premium</option>
+
+                    </select>
+
                 </div>
 
                 <div class="form-group">
                     <label>Mô tả</label>
-                    <textarea name="description" id="edit_description"></textarea>
+                    <textarea name="description"
+                        id="edit_description"></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label>Pin</label>
-                    <input type="text" name="panel" id="edit_panel">
-                </div>
-
-                <div class="form-group">
-                    <label>Inverter</label>
-                    <input type="text" name="inverter" id="edit_inverter">
-                </div>
-
-                <div class="form-group">
-                    <label>Tiết kiệm</label>
-                    <input type="text" name="saving" id="edit_saving">
-                </div>
-
-                <div class="form-group">
-                    <label>Ảnh mới (nếu muốn đổi)</label>
+                    <label>Ảnh mới</label>
                     <input type="file" name="image">
                 </div>
 
                 <div class="form-actions">
-                    <button type="button" class="btn cancel" onclick="closeEditModal()">Hủy</button>
-                    <button class="btn save">💾 Cập nhật</button>
+
+                    <button type="button"
+                        class="btn cancel"
+                        onclick="closeEditModal()">
+
+                        Hủy
+
+                    </button>
+
+                    <button class="btn save">
+
+                        Cập nhật
+
+                    </button>
+
                 </div>
+
             </form>
+
         </div>
+
     </div>
 
     <script>
-        //xem dự án
         function openModal() {
-            document.getElementById('projectModal').style.display = 'flex';
+
+            document.getElementById('productModal').style.display = 'flex';
         }
 
         function closeModal() {
-            document.getElementById('projectModal').style.display = 'none';
+
+            document.getElementById('productModal').style.display = 'none';
         }
-        window.onclick = e => {
-            const m = document.getElementById('projectModal');
-            if (e.target === m) m.style.display = 'none';
-        }
-        //Sửa dựu án
 
         function openEditModal(p) {
+
             document.getElementById('editModal').style.display = 'flex';
 
             document.getElementById('edit_id').value = p.id;
-            document.getElementById('edit_title').value = p.title;
-            document.getElementById('edit_category').value = p.category;
-            document.getElementById('edit_tag').value = p.tag;
+            document.getElementById('edit_name').value = p.name;
+            document.getElementById('edit_brand').value = p.brand;
             document.getElementById('edit_power').value = p.power;
-            document.getElementById('edit_location').value = p.location;
+            document.getElementById('edit_technology').value = p.technology;
+            document.getElementById('edit_efficiency').value = p.efficiency;
+            document.getElementById('edit_warranty').value = p.warranty;
+            document.getElementById('edit_size').value = p.size;
+            document.getElementById('edit_price').value = p.price;
+            document.getElementById('edit_category').value = p.category;
             document.getElementById('edit_description').value = p.description;
-            document.getElementById('edit_panel').value = p.panel;
-            document.getElementById('edit_inverter').value = p.inverter;
-            document.getElementById('edit_saving').value = p.saving;
         }
 
         function closeEditModal() {
+
             document.getElementById('editModal').style.display = 'none';
         }
     </script>
+
+</body>
+
+</html>

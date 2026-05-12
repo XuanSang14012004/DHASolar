@@ -42,14 +42,14 @@ include 'includes/header.php';
 
             </div>
             <div class="service-content-img">
-                <img src="../../test1.png" alt="">
+                <img src="../../images/service/service2.jpg" alt="">
 
             </div>
         </div>
 
         <div class="service-content">
             <div class="service-content-img">
-                <img src="../../test1.png" alt="">
+                <img src="../../images/service/service3.jpg" alt="">
 
             </div>
             <div class="service-content-ct">
@@ -118,14 +118,14 @@ include 'includes/header.php';
 
             </div>
             <div class="service-content-img">
-                <img src="../../test1.png" alt="">
+                <img src="../../images/service/service4.jpg" alt="">
 
             </div>
         </div>
 
         <div class="service-content">
             <div class="service-content-img">
-                <img src="../../test1.png" alt="">
+                <img src="../../images/service/service1.jpg" alt="">
 
             </div>
             <div class="service-content-ct">

@@ -24,7 +24,7 @@ include 'includes/header.php';
         </div>
 
         <div class="welcome-image">
-            <img src="../../images/logo/test1.png" alt="">
+            <img src="../../images/logo/welcome.jpg" alt="">
         </div>
     </div>
 
@@ -80,28 +80,30 @@ include 'includes/header.php';
 
     <!-- PROJECT -->
     <div class="project">
-        <h2>Dự án tiêu biểu</h2>
-        <p>Những công trình đã triển khai</p>
+        <h2>Sản phẩm tiêu biểu</h2>
+        <p>Những sản phẩm bán chạy</p>
 
         <div class="project-most">
             <?php
-            $sql = "SELECT * FROM projects LIMIT 3";
+            $sql = "SELECT * FROM solar_panels LIMIT 6";
             $result = mysqli_query($conn, $sql);
 
             while ($row = mysqli_fetch_assoc($result)) {
             ?>
                 <div class="project-most-item">
                     <img src="../../images/projects/<?= $row['image'] ?>">
-                    <h3><?= $row['title'] ?></h3>
+                    <h3><?= $row['name'] ?></h3>
                     <ul class="project-most-info">
-                        <li><?= $row['power'] ?></li>
-                        <li><?= $row['tag'] ?></li>
+                        <li>Hãng: <?= $row['brand'] ?></li>
+                        <li>Công suất: <?= $row['power'] ?></li>
+                        <li>Hiệu suất: <?= $row['efficiency'] ?></li>
+                        <li>Công nghệ: <?= $row['technology'] ?></li>
                     </ul>
                 </div>
             <?php } ?>
         </div>
 
-        <a href="project.php">Xem tất cả dự án</a>
+        <a href="project.php">Xem tất cả sản phẩm</a>
     </div>
 
     <!-- REVIEW -->

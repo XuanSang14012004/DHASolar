@@ -2,8 +2,12 @@
 session_start();
 include '../../config/database.php';
 
-if (!isset($_SESSION['admin'])) {
-    header("Location: login.php");
+if (
+    !isset($_SESSION['user']) ||
+    trim(strtolower($_SESSION['user']['role'])) != 'admin'
+) {
+
+    header("Location: /DOANCNPM/User/php/login.php");
     exit();
 }
 
@@ -109,9 +113,10 @@ th, td{
     <h2>⚡ Solar Admin</h2>
     <ul>
         <li class="active"><a href="dashboard.php">Dashboard</a></li>
-        <li><a href="projects.php">Dự án</a></li>
+        <li><a href="projects.php">Sản phẩm</a></li>
         <li><a href="contacts.php">Liên hệ</a></li>
         <li><a href="posts.php">Bài viết</a></li>
+        <li><a href="order.php">Đơn hàng</a></li>
         <li><a href="logout.php">Đăng xuất</a></li>
     </ul>
 </aside>

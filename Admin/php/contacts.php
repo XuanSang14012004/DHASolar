@@ -52,11 +52,12 @@ if (!$result) {
         <aside class="sidebar">
             <h2>⚡ Solar Admin</h2>
             <ul>
-                <li><a href="dashboard.php">Dashboard</a></li>
-                <li><a href="projects.php">Dự án</a></li>
-                <li class="active"><a href="contacts.php">Liên hệ</a></li>
+                <li class="active"><a href="dashboard.php">Dashboard</a></li>
+                <li><a href="projects.php">Sản phẩm</a></li>
+                <li><a href="contacts.php">Liên hệ</a></li>
                 <li><a href="posts.php">Bài viết</a></li>
-                <li><a href="logout.php">Đăng Xuất</a></li>
+                <li><a href="order.php">Đơn hàng</a></li>
+                <li><a href="logout.php">Đăng xuất</a></li>
             </ul>
         </aside>
 
@@ -110,7 +111,7 @@ if (!$result) {
                                 </td>
                                 <td data-label="SĐT">
                                     <a href="tel:<?= htmlspecialchars($contact['phone']) ?>" class="phone-link">
-                                        📞 <?= htmlspecialchars($contact['phone']) ?>
+                                        <?= htmlspecialchars($contact['phone']) ?>
                                     </a>
                                 </td>
                                 <td data-label="Email">
@@ -142,7 +143,7 @@ if (!$result) {
                                 </td>
                                 <td data-label="Hành động">
                                     <button class="btn view" onclick="viewContact(<?= $contact['id'] ?>)">
-                                        👁️ Xem
+                                         Xem
                                     </button>
                                     <?php if ($contact['status'] == 'Chưa đọc'): ?>
                                         <a href="?mark_read=<?= $contact['id'] ?>" class="btn edit">
@@ -152,7 +153,7 @@ if (!$result) {
                                     <a href="?delete=<?= $contact['id'] ?>"
                                         class="btn delete"
                                         onclick="return confirm('Bạn có chắc muốn xóa?')">
-                                        🗑️ Xóa
+                                         Xóa
                                     </a>
                                 </td>
                             </tr>
@@ -188,7 +189,7 @@ if (!$result) {
                         </div>
                         <div class="detail-row">
                             <strong>Số điện thoại:</strong>
-                            <a href="tel:${c.phone}" class="phone-link">📞 ${c.phone}</a>
+                            <a href="tel:${c.phone}" class="phone-link"> ${c.phone}</a>
                         </div>
                         <div class="detail-row">
                             <strong>Email:</strong>
@@ -218,8 +219,8 @@ if (!$result) {
                         </div>
                     </div>
                     <div class="modal-actions">
-                        <a href="tel:${c.phone}" class="btn-action call">📞 Gọi ngay</a>
-                        <a href="mailto:${c.email}" class="btn-action email">✉️ Gửi email</a>
+                        <a href="tel:${c.phone}" class="btn-action call"> Gọi ngay</a>
+                        <a href="mailto:${c.email}" class="btn-action email">Gửi email</a>
                         ${c.status === 'Chưa đọc' ? 
                             `<a href="?mark_read=${c.id}" class="btn-action mark-read">✓ Đánh dấu đã đọc</a>` 
                             : ''}

@@ -18,7 +18,7 @@ include 'includes/header.php';
    
     <div class="about-content">
         <div class="about-content-img">
-            <img src="../../test1.png" alt="img-wel">
+            <img src="../../images/logo/welcome.jpg" alt="img-wel">
         </div>
         <div class="about-content-content">
             <h2>Giới thiệu công ty</h2>
@@ -190,7 +190,7 @@ include 'includes/header.php';
 
         </div>
         <div class="expertise-img">
-            <img src="../../test1.png" alt="img-wel">
+            <img src="../../images/welcome/welcome1.jpg" alt="img-wel">
 
         </div>
     </div>

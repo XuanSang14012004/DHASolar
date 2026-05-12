@@ -17,8 +17,7 @@ if (isset($_GET['delete'])) {
     exit();
 }
 // Thêm bài viết
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title']) && !isset($_POST['edit_id']))
- {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title']) && !isset($_POST['edit_id'])) {
 
     function slugify($str)
     {
@@ -87,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_id'])) {
 
     // Lấy ảnh cũ
     $oldImage = $conn->query("SELECT image FROM posts WHERE id=$id")
-                     ->fetch_assoc()['image'];
+        ->fetch_assoc()['image'];
 
     $imageName = $oldImage;
 
@@ -112,7 +111,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_id'])) {
             WHERE id=?";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssi",
+    $stmt->bind_param(
+        "ssssssi",
         $title,
         $description,
         $content,
@@ -156,9 +156,10 @@ if (!$result) {
             <h2>⚡ Solar Admin</h2>
             <ul>
                 <li class="active"><a href="dashboard.php">Dashboard</a></li>
-                <li><a href="projects.php">Dự án</a></li>
+                <li><a href="projects.php">Sản phẩm</a></li>
                 <li><a href="contacts.php">Liên hệ</a></li>
                 <li><a href="posts.php">Bài viết</a></li>
+                <li><a href="order.php">Đơn hàng</a></li>
                 <li><a href="logout.php">Đăng xuất</a></li>
             </ul>
         </aside>
@@ -168,7 +169,7 @@ if (!$result) {
             <div class="content-header">
                 <h1>Quản lý Bài viết</h1>
                 <button class="btn add" onclick="openPostModal()">
-                    ➕ Thêm bài viết
+                     Thêm bài viết
                 </button>
             </div>
 
@@ -230,7 +231,7 @@ if (!$result) {
 
                                 <td>
                                     <button class="btn view" onclick="viewPost(<?= $post['id'] ?>)">👁 Xem</button>
-                                    <button class="btn edit" onclick="editPost(<?= $post['id'] ?>)">✏️ Sửa</button>
+                                    <button class="btn edit" onclick="editPost(<?= $post['id'] ?>)"> Sửa</button>
                                     <a href="?delete=<?= $post['id'] ?>"
                                         class="btn delete"
                                         onclick="return confirm('Xóa bài viết này?')">🗑 Xóa</a>
@@ -249,7 +250,7 @@ if (!$result) {
     <div class="modal" id="postModal">
         <div class="modal-content large">
             <span class="close" onclick="closePostModal()">&times;</span>
-            <h2>➕ Thêm bài viết</h2>
+            <h2> Thêm bài viết</h2>
 
             <form method="POST" enctype="multipart/form-data">
 
@@ -300,7 +301,7 @@ if (!$result) {
 
                 <div class="form-actions">
                     <button type="button" class="btn cancel" onclick="closePostModal()">Hủy</button>
-                    <button class="btn save">💾 Lưu bài viết</button>
+                    <button class="btn save"> Lưu bài viết</button>
                 </div>
 
             </form>
@@ -313,10 +314,10 @@ if (!$result) {
             <h2 id="viewTitle"></h2>
 
             <p class="post-meta">
-                🗂 <span id="viewCategory"></span> |
-                ✍ <span id="viewAuthor"></span> |
-                👁 <span id="viewViews"></span> |
-                📅 <span id="viewDate"></span>
+                <span id="viewCategory"></span> |
+                 <span id="viewAuthor"></span> |
+                <span id="viewViews"></span> |
+                 <span id="viewDate"></span>
             </p>
 
             <img id="viewImage" class="view-image" style="width: 80px;
@@ -333,7 +334,7 @@ if (!$result) {
     <div class="modal" id="editModal">
         <div class="modal-content large">
             <span class="close" onclick="closeEdit()">&times;</span>
-            <h2>✏️ Sửa bài viết</h2>
+            <h2> Sửa bài viết</h2>
 
             <form method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="edit_id" id="edit_id">
@@ -375,7 +376,7 @@ if (!$result) {
 
                 <div class="form-actions">
                     <button type="button" class="btn cancel" onclick="closeEdit()">Hủy</button>
-                    <button class="btn save">💾 Cập nhật</button>
+                    <button class="btn save"> Cập nhật</button>
                 </div>
             </form>
         </div>
